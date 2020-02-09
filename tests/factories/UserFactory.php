@@ -1,10 +1,9 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
-use Minions\Task\Tests\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Minions\Task\Tests\User;
 
 /*
 |--------------------------------------------------------------------------

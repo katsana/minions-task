@@ -27,8 +27,6 @@ class TaskTest extends TestCase
      * Define environment setup.
      *
      * @param \Illuminate\Foundation\Application $app
-     *
-     * @return void
      */
     protected function getEnvironmentSetUp($app): void
     {
@@ -69,9 +67,45 @@ class TaskTest extends TestCase
             'project' => 'server-project-id',
             'method' => 'math.add',
             'payload' => '[1,2,3,4,5]',
-            'status' => 'waiting',
+            'status' => 'created',
             'creator_id' => $user->id,
             'creator_type' => \get_class($user),
         ]);
+    }
+
+    /** @test */
+    public function it_has_correct_pending_task()
+    {
+        $task = factory(Task::class)->make([
+            'status' => 'created',
+        ]);
+
+        $this->assertTrue($task->isPending());
+        $this->assertFalse($task->isCompleted());
+
+        $task = factory(Task::class)->make([
+            'status' => 'running',
+        ]);
+
+        $this->assertTrue($task->isPending());
+        $this->assertFalse($task->isCompleted());
+    }
+
+    /** @test */
+    public function it_has_correct_completed_task()
+    {
+        $task = factory(Task::class)->make([
+            'status' => 'completed',
+        ]);
+
+        $this->assertFalse($task->isPending());
+        $this->assertTrue($task->isCompleted());
+
+        $task = factory(Task::class)->make([
+            'status' => 'cancelled',
+        ]);
+
+        $this->assertFalse($task->isPending());
+        $this->assertTrue($task->isCompleted());
     }
 }

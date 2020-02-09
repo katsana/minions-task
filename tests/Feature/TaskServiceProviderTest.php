@@ -2,9 +2,7 @@
 
 namespace Minions\Task\Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
-use Minions\Task\TaskServiceProvider;
 use Minions\Task\Tests\TestCase;
 
 class TaskServiceProviderTest extends TestCase
@@ -24,7 +22,6 @@ class TaskServiceProviderTest extends TestCase
 
         $this->artisan('migrate:reset')->run();
     }
-
 
     /** @test */
     public function it_can_migrate_the_table_using_custom_table_name()

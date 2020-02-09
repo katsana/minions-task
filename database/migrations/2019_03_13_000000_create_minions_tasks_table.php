@@ -23,7 +23,7 @@ class CreateMinionsTasksTable extends Migration
             $table->longText('payload')->nullable();
             $table->longText('exception')->nullable();
 
-            $table->string('status')->default('waiting')->index();
+            $table->string('status')->default('created')->index();
 
             $table->timestamps();
 

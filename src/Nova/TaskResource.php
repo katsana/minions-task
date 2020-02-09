@@ -49,7 +49,7 @@ class TaskResource extends Resource
             Text::make('Method'),
 
             Status::make('Status')
-                    ->loadingWhen(['created', 'waiting', 'running'])
+                    ->loadingWhen(['created', 'running'])
                     ->failedWhen(['cancelled', 'failed']),
 
             Code::make('Payload')
