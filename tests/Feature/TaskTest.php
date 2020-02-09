@@ -58,7 +58,7 @@ class TaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        Task::add($user, 'server-project-id', 'math.add', [1, 2, 3, 4, 5]);
+        $task = Task::add($user, 'server-project-id', 'math.add', [1, 2, 3, 4, 5]);
 
         Queue::assertPushed(PerformTask::class, function ($job) use ($user) {
             return $job->task->project === 'server-project-id' && $job->task->method === 'math.add';
@@ -72,6 +72,9 @@ class TaskTest extends TestCase
             'creator_id' => $user->id,
             'creator_type' => \get_class($user),
         ]);
+
+        $this->assertInstanceOf(Task::class, $task);
+        $this->assertInstanceOf(User::class, $task->creator);
     }
 
     /** @test */
