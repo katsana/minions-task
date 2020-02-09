@@ -29,7 +29,6 @@
         "illuminate/support": "^6.0 || ^7.0"
     },
     "require-dev": {
-        "clue/buzz-react": "^2.5",
         "katsana/minions": "^1.2.1",
         "orchestra/canvas": "^4.5 || ^5.0",
         "orchestra/testbench": "^4.5 || ^5.0"
