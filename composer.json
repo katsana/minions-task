@@ -26,13 +26,20 @@
     },
     "require-dev": {
         "clue/buzz-react": "^2.5",
-        "katsana/minions": "^1.2",
+        "katsana/minions": "^1.2.1",
         "katsana/minions-polyfill": "^1.0",
         "orchestra/canvas": "^4.5 || ^5.0",
         "orchestra/testbench": "^4.5 || ^5.0"
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Minions\\Task\\TaskServiceProvider"
+            ]
+        }
     },
     "minimum-stability": "dev"
 }
