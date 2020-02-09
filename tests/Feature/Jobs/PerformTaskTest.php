@@ -3,9 +3,7 @@
 namespace Minions\Task\Tests\Feature\Jobs;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Minions\Client\Response;
 use Minions\Exceptions\ClientHasError;
-use Minions\Exceptions\Exception;
 use Minions\Exceptions\ServerHasError;
 use Minions\Task\Task;
 use Minions\Task\Tests\TestCase;
@@ -68,7 +66,7 @@ class PerformTaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -99,7 +97,7 @@ class PerformTaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -132,7 +130,7 @@ class PerformTaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -165,7 +163,7 @@ class PerformTaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',

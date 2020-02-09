@@ -79,14 +79,14 @@ class TaskTest extends TestCase
     /** @test */
     public function it_has_correct_pending_task()
     {
-        $task = factory(Task::class)->make([
+        $task = \factory(Task::class)->make([
             'status' => 'created',
         ]);
 
         $this->assertTrue($task->isPending());
         $this->assertFalse($task->isCompleted());
 
-        $task = factory(Task::class)->make([
+        $task = \factory(Task::class)->make([
             'status' => 'running',
         ]);
 
@@ -97,14 +97,14 @@ class TaskTest extends TestCase
     /** @test */
     public function it_has_correct_completed_task()
     {
-        $task = factory(Task::class)->make([
+        $task = \factory(Task::class)->make([
             'status' => 'completed',
         ]);
 
         $this->assertFalse($task->isPending());
         $this->assertTrue($task->isCompleted());
 
-        $task = factory(Task::class)->make([
+        $task = \factory(Task::class)->make([
             'status' => 'cancelled',
         ]);
 
@@ -117,7 +117,7 @@ class TaskTest extends TestCase
     {
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -133,7 +133,6 @@ class TaskTest extends TestCase
         $this->assertEquals($task->id, $message->id());
     }
 
-
     /** @test */
     public function it_can_manually_dispatch_a_task()
     {
@@ -141,7 +140,7 @@ class TaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -156,7 +155,6 @@ class TaskTest extends TestCase
         });
     }
 
-
     /** @test */
     public function it_can_manually_dispatch_now_a_task()
     {
@@ -164,7 +162,7 @@ class TaskTest extends TestCase
 
         $user = \factory(User::class)->create();
 
-        $task = factory(Task::class)->create([
+        $task = \factory(Task::class)->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
