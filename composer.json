@@ -1,6 +1,6 @@
 {
     "name": "katsana/minions-task",
-    "description": "Minions Task Runner",
+    "description": "Minions Task Manager for Laravel",
     "type": "library",
     "license": "MIT",
     "authors": [
