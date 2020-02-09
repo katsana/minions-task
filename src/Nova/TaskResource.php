@@ -43,7 +43,7 @@ class TaskResource extends Resource
         return [
             ID::make()->sortable(),
 
-            MorphTo::make('Creator'),
+            $this->creatorRelatedField($request),
 
             Text::make('Project'),
             Text::make('Method'),
@@ -65,6 +65,16 @@ class TaskResource extends Resource
             DateTime::make('Created At')->format('D MMM YYYY, LTS')->sortable(),
             DateTime::make('Updated At')->format('D MMM YYYY, LTS')->onlyOnDetail(),
         ];
+    }
+
+    /**
+     * Creator related field.
+     *
+     * @return \Laravel\Nova\Fields\MorphTo
+     */
+    protected function creatorRelatedField(Request $request)
+    {
+        return MorphTo::make('Creator');
     }
 
     /**
