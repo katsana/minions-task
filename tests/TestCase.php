@@ -26,6 +26,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [
             \Laravie\Stream\Laravel\StreamServiceProvider::class,
             \Minions\MinionsServiceProvider::class,
+            \Minions\Http\MinionsServiceProvider::class,
             \Minions\Task\TaskServiceProvider::class,
         ];
     }
