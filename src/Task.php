@@ -28,7 +28,7 @@ class Task extends Model
      *
      * @var array
      */
-    protected $fillable = ['action', 'method', 'payload'];
+    protected $fillable = ['project', 'method', 'payload'];
 
     /**
      * Get the table associated with the model.
