@@ -47,7 +47,11 @@ class Task extends Model
      */
     public function creator()
     {
-        return $this->morphTo()->withTrashed();
+        return \tap($this->morphTo(), static function ($morphTo) {
+            if (\method_exists($morphTo, 'withTrashed')) {
+                $morphTo->withTrashed();
+            }
+        });
     }
 
     /**
