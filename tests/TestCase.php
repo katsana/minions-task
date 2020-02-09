@@ -28,6 +28,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
             \Minions\MinionsServiceProvider::class,
             \Minions\Http\MinionsServiceProvider::class,
             \Minions\Task\TaskServiceProvider::class,
+
+            \Orchestra\Canvas\Core\LaravelServiceProvider::class,
         ];
     }
 }
