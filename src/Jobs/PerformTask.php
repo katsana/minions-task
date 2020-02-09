@@ -46,7 +46,7 @@ class PerformTask implements ShouldQueue
         $this->task->save();
 
         $response = Minion::broadcast(
-            $this->task->project, $this->task->asMessage()
+            $this->task->project, $this->task->toMessage()
         );
 
         $response->then(function (ResponseInterface $response) {

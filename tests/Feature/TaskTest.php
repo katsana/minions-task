@@ -3,6 +3,7 @@
 namespace Minions\Task\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
 use Minions\Task\Jobs\PerformTask;
 use Minions\Task\Task;
@@ -107,5 +108,72 @@ class TaskTest extends TestCase
 
         $this->assertFalse($task->isPending());
         $this->assertTrue($task->isCompleted());
+    }
+
+    /** @test */
+    public function it_has_be_converted_to_message()
+    {
+        $user = \factory(User::class)->create();
+
+        $task = factory(Task::class)->create([
+            'creator_type' => get_class($user),
+            'creator_id' => $user->id,
+            'project' => 'server-project-id',
+            'method' => 'math.add',
+            'payload' => [1, 2, 3, 4, 5],
+        ]);
+
+        $message = $task->toMessage();
+
+        $this->assertInstanceOf('Minions\Client\Message', $message);
+        $this->assertSame('math.add', $message->method());
+        $this->assertSame([1, 2, 3, 4, 5], $message->parameters());
+        $this->assertEquals($task->id, $message->id());
+    }
+
+
+    /** @test */
+    public function it_can_manually_dispatch_a_task()
+    {
+        Queue::fake();
+
+        $user = \factory(User::class)->create();
+
+        $task = factory(Task::class)->create([
+            'creator_type' => get_class($user),
+            'creator_id' => $user->id,
+            'project' => 'server-project-id',
+            'method' => 'math.add',
+            'payload' => [1, 2, 3, 4, 5],
+        ]);
+
+        $task->dispatch();
+
+        Queue::assertPushed(PerformTask::class, function ($job) use ($user) {
+            return $job->task->project === 'server-project-id' && $job->task->method === 'math.add';
+        });
+    }
+
+
+    /** @test */
+    public function it_can_manually_dispatch_now_a_task()
+    {
+        Bus::fake();
+
+        $user = \factory(User::class)->create();
+
+        $task = factory(Task::class)->create([
+            'creator_type' => get_class($user),
+            'creator_id' => $user->id,
+            'project' => 'server-project-id',
+            'method' => 'math.add',
+            'payload' => [1, 2, 3, 4, 5],
+        ]);
+
+        $task->dispatchNow();
+
+        Bus::assertDispatched(PerformTask::class, function ($job) use ($user) {
+            return $job->task->project === 'server-project-id' && $job->task->method === 'math.add';
+        });
     }
 }

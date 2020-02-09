@@ -112,7 +112,7 @@ class Task extends Model
     /**
      * As Minions message.
      */
-    public function asMessage(): Message
+    public function toMessage(): Message
     {
         return new Message(
             $this->method, $this->payload, $this->id
