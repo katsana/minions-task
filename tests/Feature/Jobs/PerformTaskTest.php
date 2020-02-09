@@ -2,11 +2,14 @@
 
 namespace Minions\Task\Tests\Feature\Jobs;
 
-use Mockery as m;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Minions\Client\Response;
 use Minions\Task\Task;
 use Minions\Task\Tests\TestCase;
 use Minions\Task\Tests\User;
+use Mockery as m;
+use React\EventLoop\LoopInterface;
+use React\Promise\Promise;
 
 class PerformTaskTest extends TestCase
 {
@@ -51,9 +54,15 @@ class PerformTaskTest extends TestCase
     /** @test */
     public function it_can_handle_the_job()
     {
-        $eventLoop = m::mock('React\EventLoop\LoopInterface');
-        $promise = m::mock('React\Promise\PromiseInterface');
+        $eventLoop = $this->app->make(LoopInterface::class);
         $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
+        $originalResponse = m::mock('Minions\Client\ResponseInterface');
+
+
+
+        $promise = new Promise(function ($resolve, $reject) use ($originalResponse) {
+            return $resolve($originalResponse);
+        });
 
         $user = \factory(User::class)->create();
 
@@ -66,10 +75,11 @@ class PerformTaskTest extends TestCase
         ]);
 
         $minion->shouldReceive('broadcast')->once()->with('server-project-id', m::type('Minions\Client\Message'))->andReturn($promise);
-        $eventLoop->shouldReceive('run')->andReturnNull();
-        $promise->shouldReceive('then')->once()->with(m::type('Closure'))->andReturnSelf()
-            ->shouldReceive('otherwise')->times(3)->with(m::type('Closure'))->andReturnSelf();
-
+        $originalResponse->shouldReceive('getRpcResult')->once()->andReturn(15);
         $task->dispatchNow();
+
+        $task->refresh();
+
+        $this->assertSame('completed', $task->status);
     }
 }

@@ -57,7 +57,7 @@ class PerformTask implements ShouldQueue
             $this->markExceptionHasOccured($exception);
         })->otherwise(function (Throwable $exception) {
             $this->markExceptionHasOccured($exception);
-        });
+        })->done();
 
         Minion::run();
     }
