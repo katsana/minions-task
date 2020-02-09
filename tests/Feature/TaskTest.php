@@ -33,22 +33,21 @@ class TaskTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $config = $app->make('config');
-
-        $config->set([
-            'minions.id' => 'server-project-id',
-            'minions.projects' => [
-                'client-project-id' => [
-                    'token' => 'secret-token',
-                    'signature' => 'secret-signature',
+        $app->make('config')
+            ->set([
+                'minions.id' => 'server-project-id',
+                'minions.projects' => [
+                    'client-project-id' => [
+                        'token' => 'secret-token',
+                        'signature' => 'secret-signature',
+                    ],
+                    'server-project-id' => [
+                        'endpoint' => 'http://127.0.0.1:8000/rpc',
+                        'token' => 'secret-token',
+                        'signature' => 'secret-signature',
+                    ],
                 ],
-                'server-project-id' => [
-                    'endpoint' => 'http://127.0.0.1:8000/rpc',
-                    'token' => 'secret-token',
-                    'signature' => 'secret-signature',
-                ],
-            ],
-        ]);
+            ]);
     }
 
     /** @test */
