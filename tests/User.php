@@ -12,8 +12,10 @@ class User extends \Illuminate\Foundation\Auth\User implements TaskCreator
 
     /**
      * Trigger when task is completed.
+     *
+     * @param mixed $response
      */
-    public function onTaskCompleted(Task $task, array $response): void
+    public function onTaskCompleted(Task $task, $response): void
     {
         //
     }
