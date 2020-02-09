@@ -1,0 +1,31 @@
+{
+    "name": "katsana/minions-task",
+    "description": "Minions Task Runner",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Minions\\Task\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "katsana/minions": "^1.2",
+        "orchestra/canvas": "^4.5",
+        "orchestra/testbench": "^4.5"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}

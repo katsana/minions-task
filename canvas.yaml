@@ -1,0 +1,26 @@
+preset: package
+
+namespace: Minions\Task
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Minions\Task\Console
+
+model:
+  namespace: Minions\Task
+
+provider:
+  namespace: Minions\Task
+
+testing:
+  namespace: Minions\Task\Tests
