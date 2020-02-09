@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMinionTasksTable extends Migration
+class CreateMinionsTasksTable extends Migration
 {
     /**
      * Run the migrations.
