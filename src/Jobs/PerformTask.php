@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Minions\Client\ResponseInterface;
 use Minions\Exceptions\ClientHasError;
+use Minions\Exceptions\RequestException;
 use Minions\Exceptions\ServerHasError;
 use Minions\Minion;
 use Minions\Task\Task;
@@ -88,8 +89,8 @@ class PerformTask implements ShouldQueue
 
         $this->task->exception = json_encode([
             'class' => \get_class($exception),
-            'message' => \optional($exception)->getMessage(),
-            'data' => \optional($exception)->getRpcErrorData() ?? null,
+            'message' => \optional($exception)->getMessage() ?? null,
+            'data' => $exception instanceof RequestException ? $exception->getRpcErrorData() ?? null : null,
         ]);
 
         $this->task->save();
