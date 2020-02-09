@@ -25,4 +25,4 @@ provider:
 testing:
   namespace: Minions\Task\Tests
   extends:
-    - feature: Minions\Task\Tests\TestCase
+    feature: Minions\Task\Tests\TestCase
