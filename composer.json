@@ -26,6 +26,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "clue/buzz-react": "^2.5",
         "illuminate/support": "^6.0 || ^7.0"
     },
     "require-dev": {
