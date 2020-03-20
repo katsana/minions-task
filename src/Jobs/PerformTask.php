@@ -12,6 +12,8 @@ use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\RequestException;
 use Minions\Exceptions\ServerHasError;
 use Minions\Minion;
+use Minions\Task\Events\TaskCompleted;
+use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
 use Throwable;
 
@@ -75,6 +77,8 @@ class PerformTask implements ShouldQueue
 
         $creator->onTaskCompleted($this->task, $response->getRpcResult());
 
+        \event(new TaskCompleted($this->task, $response));
+
         $this->task->save();
     }
 
@@ -94,6 +98,8 @@ class PerformTask implements ShouldQueue
         ]);
 
         $this->task->save();
+
+        \event(new TaskFailed($this->task));
 
         $this->delete();
     }

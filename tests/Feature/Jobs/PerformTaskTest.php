@@ -3,8 +3,11 @@
 namespace Minions\Task\Tests\Feature\Jobs;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\ServerHasError;
+use Minions\Task\Events\TaskCompleted;
+use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
 use Minions\Task\Tests\TestCase;
 use Minions\Task\Tests\User;
@@ -56,6 +59,8 @@ class PerformTaskTest extends TestCase
     /** @test */
     public function it_can_handle_the_job()
     {
+        Event::fake();
+
         $eventLoop = $this->app->make(LoopInterface::class);
         $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
@@ -82,11 +87,16 @@ class PerformTaskTest extends TestCase
 
         $this->assertSame('completed', $task->status);
         $this->assertNull($task->exception);
+
+        Event::assertDispatched(TaskCompleted::class);
+        Event::assertNotDispatched(TaskFailed::class);
     }
 
     /** @test */
     public function it_can_handle_the_job_when_received_client_has_error()
     {
+        Event::fake();
+
         $eventLoop = $this->app->make(LoopInterface::class);
         $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
@@ -115,11 +125,16 @@ class PerformTaskTest extends TestCase
         $this->assertSame(
             '{"class":"Minions\\\\Exceptions\\\\ClientHasError","message":"Client has error","data":"Client has error [-32600]"}', $task->exception
         );
+
+        Event::assertNotDispatched(TaskCompleted::class);
+        Event::assertDispatched(TaskFailed::class);
     }
 
     /** @test */
     public function it_can_handle_the_job_when_received_server_has_error()
     {
+        Event::fake();
+
         $eventLoop = $this->app->make(LoopInterface::class);
         $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
@@ -148,11 +163,16 @@ class PerformTaskTest extends TestCase
         $this->assertSame(
             '{"class":"Minions\\\\Exceptions\\\\ServerHasError","message":"Missing Signature.","data":"Missing Signature [-32651]"}', $task->exception
         );
+
+        Event::assertNotDispatched(TaskCompleted::class);
+        Event::assertDispatched(TaskFailed::class);
     }
 
     /** @test */
     public function it_can_handle_the_job_when_received_throwable()
     {
+        Event::fake();
+
         $eventLoop = $this->app->make(LoopInterface::class);
         $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
@@ -180,5 +200,8 @@ class PerformTaskTest extends TestCase
         $this->assertSame(
             '{"class":"Error","message":"Cannot instantiate interface Throwable","data":null}', $task->exception
         );
+
+        Event::assertNotDispatched(TaskCompleted::class);
+        Event::assertDispatched(TaskFailed::class);
     }
 }

@@ -48,7 +48,7 @@ class Task extends Model
     public function creator()
     {
         return \tap($this->morphTo(), static function ($morphTo) {
-            \rescue(static function() use ($morphTo) {
+            \rescue(static function () use ($morphTo) {
                 $morphTo->withTrashed();
             }, null, false);
         });
