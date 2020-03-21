@@ -80,7 +80,6 @@ class PerformTaskTest extends TestCase
         ]);
 
         $minion->shouldReceive('broadcast')->once()->with('server-project-id', m::type('Minions\Client\Message'))->andReturn($promise);
-        $originalResponse->shouldReceive('getRpcResult')->once()->andReturn(15);
         $task->dispatchNow();
 
         $task->refresh();
