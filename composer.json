@@ -27,10 +27,10 @@
     "require": {
         "php": ">=7.2",
         "clue/buzz-react": "^2.5",
-        "illuminate/support": "^6.0 || ^7.0"
+        "illuminate/support": "^6.0 || ^7.0",
+        "katsana/minions": "^1.2.1 || ^2.0"
     },
     "require-dev": {
-        "katsana/minions": "^1.2.1",
         "orchestra/canvas": "^4.5 || ^5.0",
         "orchestra/testbench": "^4.5 || ^5.0"
     },
