@@ -73,13 +73,15 @@ class PerformTask implements ShouldQueue
         $this->task->status = 'completed';
         $this->task->exception = null;
 
-        $creator = $this->task->creator()->withTrashed()->first();
-
         $this->task->save();
 
-        $creator->onTaskCompleted($this->task, $response->getRpcResult());
-
         \event(new TaskCompleted($this->task, $response));
+
+        $creator = $this->task->creator()->withTrashed()->first();
+
+        if (\method_exists($creator, 'onTaskCompleted')) {
+            $creator->onTaskCompleted($this->task, $response->getRpcResult());
+        }
     }
 
     /**
