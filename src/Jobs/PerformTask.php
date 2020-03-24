@@ -15,6 +15,7 @@ use Minions\Minion;
 use Minions\Task\Events\TaskCompleted;
 use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
+use Minions\Task\TaskCreator;
 use Throwable;
 
 class PerformTask implements ShouldQueue
@@ -73,11 +74,9 @@ class PerformTask implements ShouldQueue
         $this->task->status = 'completed';
         $this->task->exception = null;
 
-        $creator = $this->task->creator()->withTrashed()->first();
+        $this->task->save();
 
         \event(new TaskCompleted($this->task, $response));
-
-        $this->task->save();
     }
 
     /**
