@@ -15,6 +15,7 @@ use Minions\Minion;
 use Minions\Task\Events\TaskCompleted;
 use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
+use Minions\Task\TaskCreator;
 use Throwable;
 
 class PerformTask implements ShouldQueue
@@ -79,7 +80,7 @@ class PerformTask implements ShouldQueue
 
         $creator = $this->task->creator()->withTrashed()->first();
 
-        if (\method_exists($creator, 'onTaskCompleted')) {
+        if ($creator instanceof TaskCreator) {
             $creator->onTaskCompleted($this->task, $response->getRpcResult());
         }
     }

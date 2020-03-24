@@ -17,14 +17,14 @@ class TaskCompleted
     /**
      * Response instance.
      *
-     * @var \Minions\Client\ResponseInterface
+     * @var mixed
      */
     public $response;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Task $task, ResponseInterface $response)
+    public function __construct(Task $task, $response)
     {
         $this->task = $task;
         $this->response = $response;
