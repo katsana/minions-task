@@ -15,7 +15,6 @@ use Minions\Minion;
 use Minions\Task\Events\TaskCompleted;
 use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
-use Minions\Task\TaskCreator;
 use Throwable;
 
 class PerformTask implements ShouldQueue
