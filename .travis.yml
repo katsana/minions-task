@@ -20,6 +20,7 @@ env:
 
 before_install:
   - composer config discard-changes true
+  - travis_retry composer self-update
 
 before_script:
   - composer require "laravel/framework=${laravel}" --prefer-dist --no-interaction --no-suggest
