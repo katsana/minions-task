@@ -2,7 +2,6 @@
 
 namespace Minions\Task\Events;
 
-use Minions\Client\ResponseInterface;
 use Minions\Task\Task;
 
 class TaskCompleted

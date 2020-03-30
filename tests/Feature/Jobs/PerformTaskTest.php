@@ -4,6 +4,7 @@ namespace Minions\Task\Tests\Feature\Jobs;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Minions\Configuration;
 use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\ServerHasError;
 use Minions\Task\Events\TaskCompleted;
@@ -62,7 +63,7 @@ class PerformTaskTest extends TestCase
         Event::fake();
 
         $eventLoop = $this->app->make(LoopInterface::class);
-        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
+        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, new Configuration([])]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
 
         $promise = new Promise(function ($resolve, $reject) use ($originalResponse) {
@@ -98,7 +99,7 @@ class PerformTaskTest extends TestCase
         Event::fake();
 
         $eventLoop = $this->app->make(LoopInterface::class);
-        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
+        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, new Configuration([])]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
 
         $promise = new Promise(function ($resolve, $reject) use ($originalResponse) {
@@ -136,7 +137,7 @@ class PerformTaskTest extends TestCase
         Event::fake();
 
         $eventLoop = $this->app->make(LoopInterface::class);
-        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
+        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, new Configuration([])]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
 
         $promise = new Promise(function ($resolve, $reject) use ($originalResponse) {
@@ -174,7 +175,7 @@ class PerformTaskTest extends TestCase
         Event::fake();
 
         $eventLoop = $this->app->make(LoopInterface::class);
-        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, []]));
+        $this->instance('minions.client', $minion = m::mock('Minions\Client\Minion', [$eventLoop, new Configuration([])]));
         $originalResponse = m::mock('Minions\Client\ResponseInterface');
 
         $promise = new Promise(function ($resolve, $reject) use ($originalResponse) {
