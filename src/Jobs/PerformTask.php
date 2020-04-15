@@ -104,6 +104,8 @@ class PerformTask implements ShouldQueue
 
         \event(new TaskFailed($this->task));
 
+        \report($exception);
+
         $this->delete();
     }
 }

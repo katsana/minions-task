@@ -117,7 +117,7 @@ class PerformTaskTest extends TestCase
         ]);
 
         $minion->shouldReceive('broadcast')->once()->with('server-project-id', m::type('Minions\Client\Message'))->andReturn($promise);
-        $originalResponse->shouldReceive('getRpcErrorData')->once()->andReturn('Client has error [-32600]');
+        $originalResponse->shouldReceive('getRpcErrorData')->twice()->andReturn('Client has error [-32600]');
         $task->dispatchNow();
 
         $task->refresh();
@@ -155,7 +155,7 @@ class PerformTaskTest extends TestCase
         ]);
 
         $minion->shouldReceive('broadcast')->once()->with('server-project-id', m::type('Minions\Client\Message'))->andReturn($promise);
-        $originalResponse->shouldReceive('getRpcErrorData')->once()->andReturn('Missing Signature [-32651]');
+        $originalResponse->shouldReceive('getRpcErrorData')->twice()->andReturn('Missing Signature [-32651]');
         $task->dispatchNow();
 
         $task->refresh();
