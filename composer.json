@@ -26,9 +26,8 @@
     },
     "require": {
         "php": ">=7.2",
-        "clue/buzz-react": "^2.5",
         "illuminate/support": "^6.0 || ^7.0",
-        "katsana/minions": "^1.6 || ^2.1"
+        "katsana/minions": "^1.7 || ^2.3"
     },
     "require-dev": {
         "orchestra/canvas": "^4.5 || ^5.0",
