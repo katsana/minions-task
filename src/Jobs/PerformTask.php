@@ -49,11 +49,11 @@ class PerformTask implements ShouldQueue
         $this->task->status = 'running';
         $this->task->save();
 
-        $response = Minion::broadcast(
+        $promise = Minion::broadcast(
             $this->task->project, $this->task->toMessage()
         );
 
-        $response->then(function (ResponseInterface $response) {
+        $promise->then(function (ResponseInterface $response) {
             $this->markTaskCompleted($response);
         })->otherwise(function (ClientHasError $exception) {
             $this->markExceptionHasOccured($exception);
