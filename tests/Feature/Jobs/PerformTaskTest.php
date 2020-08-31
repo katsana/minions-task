@@ -10,6 +10,8 @@ use Minions\Exceptions\ServerHasError;
 use Minions\Task\Events\TaskCompleted;
 use Minions\Task\Events\TaskFailed;
 use Minions\Task\Task;
+use Minions\Task\Testing\Factories\TaskFactory;
+use Minions\Task\Tests\Factories\UserFactory;
 use Minions\Task\Tests\TestCase;
 use Minions\Task\Tests\User;
 use Mockery as m;
@@ -70,9 +72,9 @@ class PerformTaskTest extends TestCase
             return $resolve($originalResponse);
         });
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -105,9 +107,9 @@ class PerformTaskTest extends TestCase
             return $reject(new ClientHasError('Client has error', -32600, $originalResponse, 'math.add'));
         });
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -143,9 +145,9 @@ class PerformTaskTest extends TestCase
             return $reject(new ServerHasError('Missing Signature.', -32651, $originalResponse, 'math.add'));
         });
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -181,9 +183,9 @@ class PerformTaskTest extends TestCase
             return $reject(new Throwable());
         });
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',

@@ -5,16 +5,6 @@ namespace Minions\Task\Tests;
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Define environment setup.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function getEnvironmentSetUp($app): void
-    {
-        $this->loadFactoriesUsing($app, __DIR__.'/factories/');
-    }
-
-    /**
      * Get package providers.
      *
      * @param \Illuminate\Foundation\Application $app

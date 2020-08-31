@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
 use Minions\Task\Jobs\PerformTask;
 use Minions\Task\Task;
+use Minions\Task\Testing\Factories\TaskFactory;
+use Minions\Task\Tests\Factories\UserFactory;
 use Minions\Task\Tests\TestCase;
 use Minions\Task\Tests\User;
 
@@ -55,7 +57,7 @@ class TaskTest extends TestCase
     {
         Queue::fake();
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
         $task = Task::add($user, 'server-project-id', 'math.add', [1, 2, 3, 4, 5]);
 
@@ -79,14 +81,14 @@ class TaskTest extends TestCase
     /** @test */
     public function it_has_correct_pending_task()
     {
-        $task = \factory(Task::class)->make([
+        $task = TaskFactory::new()->make([
             'status' => 'created',
         ]);
 
         $this->assertTrue($task->isPending());
         $this->assertFalse($task->isCompleted());
 
-        $task = \factory(Task::class)->make([
+        $task = TaskFactory::new()->make([
             'status' => 'running',
         ]);
 
@@ -97,14 +99,14 @@ class TaskTest extends TestCase
     /** @test */
     public function it_has_correct_completed_task()
     {
-        $task = \factory(Task::class)->make([
+        $task = TaskFactory::new()->make([
             'status' => 'completed',
         ]);
 
         $this->assertFalse($task->isPending());
         $this->assertTrue($task->isCompleted());
 
-        $task = \factory(Task::class)->make([
+        $task = TaskFactory::new()->make([
             'status' => 'cancelled',
         ]);
 
@@ -115,9 +117,9 @@ class TaskTest extends TestCase
     /** @test */
     public function it_has_be_converted_to_message()
     {
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -138,9 +140,9 @@ class TaskTest extends TestCase
     {
         Queue::fake();
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
@@ -160,9 +162,9 @@ class TaskTest extends TestCase
     {
         Bus::fake();
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $task = \factory(Task::class)->create([
+        $task = TaskFactory::new()->create([
             'creator_type' => get_class($user),
             'creator_id' => $user->id,
             'project' => 'server-project-id',
